@@ -21,8 +21,8 @@ public class Main {
     public static void main(String[] args) {
         Logger log = new Log();
         Configurable cfg = new Configs();
-        Maker hmaker = new HandlersMaker();
         Server wserver = new WebServer();
+        Maker hmaker = new HandlersMaker(log, cfg);
         Application app = new Application(log, cfg, wserver, hmaker);
 
         app.start();

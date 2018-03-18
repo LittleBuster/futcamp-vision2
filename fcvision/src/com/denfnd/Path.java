@@ -24,6 +24,8 @@ public class Path {
     private Path() {
         files.put("log", "/var/log/fcvision.log");
         files.put("cfg", "/etc/fcvision.conf");
+        files.put("files", "/usr/share/fcvision/files");
+        files.put("html", "/usr/share/fcvision/html");
     }
 
     public static synchronized Path getInstance() {
