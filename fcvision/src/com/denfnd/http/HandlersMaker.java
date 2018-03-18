@@ -13,14 +13,27 @@
 package com.denfnd.http;
 
 
+import com.denfnd.http.handlers.FileHandler;
 import com.denfnd.http.handlers.IndexHandler;
+import com.denfnd.utils.Configurable;
+import com.denfnd.utils.Logger;
 import com.sun.net.httpserver.HttpHandler;
 
 
 public class HandlersMaker implements Maker {
+    private Logger log;
+    private Configurable cfg;
+
+    public HandlersMaker(Logger logr, Configurable cfgs) {
+        log = logr;
+        cfg = cfgs;
+    }
+
     public HttpHandler makeHandler(String name) {
-        if (name == "index")
-            return new IndexHandler();
+        if (name.equals("index"))
+            return new IndexHandler(log);
+        if (name.equals("css") || name.equals("js") || name.equals("img"))
+            return new FileHandler(log);
         return null;
     }
 }

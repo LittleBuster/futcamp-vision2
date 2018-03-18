@@ -50,6 +50,9 @@ public class Application {
         try {
             websrv.init();
             websrv.addHandler("/", handmkr.makeHandler("index"));
+            websrv.addHandler("/css", handmkr.makeHandler("css"));
+            websrv.addHandler("/js", handmkr.makeHandler("js"));
+            websrv.addHandler("/img", handmkr.makeHandler("img"));
             websrv.start(cfg.getInt("server_port"), cfg.getInt("server_queue"), cfg.getInt("server_threads"));
         }
         catch (Exception e) {
