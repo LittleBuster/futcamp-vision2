@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-class ParamsDecoder {
+public class ParamsDecoder {
     private Map<String, String> ps = new HashMap<>();
 
     public boolean split(String request) {
@@ -49,7 +49,7 @@ class ParamsDecoder {
             return true;
     }
 
-    String getParam(String name) {
+    public String getParam(String name) {
         return ps.get(name);
     }
 }
