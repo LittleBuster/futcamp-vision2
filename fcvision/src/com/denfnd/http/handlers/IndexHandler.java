@@ -15,18 +15,24 @@ package com.denfnd.http.handlers;
 
 import com.denfnd.Path;
 import com.denfnd.http.PageParser;
+import com.denfnd.sys.DiskData;
+import com.denfnd.sys.MemData;
+import com.denfnd.sys.SystemInfo;
 import com.denfnd.utils.Logger;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.OutputStream;
 
 
 public class IndexHandler implements HttpHandler {
     private Logger log;
+    private SystemInfo sys;
 
-    public IndexHandler(Logger logr) {
+    public IndexHandler(Logger logr, SystemInfo syst) {
         log = logr;
+        sys = syst;
     }
 
     @Override
@@ -39,15 +45,54 @@ public class IndexHandler implements HttpHandler {
             parser.loadTemplate(path.get("html") + "/index.html");
         }
         catch (Exception e) {
-            log.error("Failed to load template: index.html", "IndexHandler");
+            log.error("Failed to load template: index.html", "INDEX_HANDLER");
+            try {
+                page = "<h1>403<br>Forbidden</h1>";
+                exchange.sendResponseHeaders(200, page.length());
+                OutputStream os = exchange.getResponseBody();
+                os.write(page.getBytes());
+                os.close();
+            }
+            catch (Exception err) {
+                log.error("Failed to send answer: " + err.getMessage(), "INDEX_HANDLER");
+                return;
+            }
             return;
         }
 
-        /* temporary values */
-        parser.setValue("cpu", "22");
-        parser.setValue("ram", "56/256");
-        parser.setValue("disk", "1.4G/3.4G");
-        parser.setValue("up", "1 hour 22 minutes");
+        try {
+            parser.setValue("cpu", String.valueOf(sys.getCpuTemp()));
+        }
+        catch (Exception e) {
+            parser.setValue("cpu", "error");
+            log.error("Fail to read cpu temp: " + e.getMessage(), "INDEX_HANDLER");
+        }
+
+        try {
+            MemData data = sys.getMemInfo();
+            parser.setValue("ram", data.getUsed() + "/" + data.getTotal());
+        }
+        catch (Exception e) {
+            parser.setValue("ram", "error");
+            log.error("Fail to read RAM info: " + e.getMessage(), "INDEX_HANDLER");
+        }
+
+        try {
+            DiskData data = sys.getDiskInfo();
+            parser.setValue("disk", data.getUsed() + "/" + data.getTotal());
+        }
+        catch (Exception e) {
+            parser.setValue("disk", "error");
+            log.error("Fail to read disk info: " + e.getMessage(), "INDEX_HANDLER");
+        }
+
+        try {
+            parser.setValue("up", sys.getUptime());
+        }
+        catch (Exception e) {
+            parser.setValue("up", "error");
+            log.error("Fail to read uptime: " + e.getMessage(), "INDEX_HANDLER");
+        }
 
         page = parser.buildPage();
         try {
@@ -63,7 +108,7 @@ public class IndexHandler implements HttpHandler {
             }
         }
         catch (Exception e) {
-            log.error("Failed to send answere: " + e.getMessage(), "IndexHandler");
+            log.error("Failed to send answer: " + e.getMessage(), "INDEX_HANDLER");
             return;
         }
     }

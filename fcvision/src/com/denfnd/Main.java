@@ -14,6 +14,8 @@ package com.denfnd;
 
 
 import com.denfnd.http.*;
+import com.denfnd.sys.SysControl;
+import com.denfnd.sys.SystemInfo;
 import com.denfnd.utils.*;
 
 
@@ -22,7 +24,8 @@ public class Main {
         Logger log = new Log();
         Configurable cfg = new Configs();
         Server wserver = new WebServer();
-        Maker hmaker = new HandlersMaker(log, cfg);
+        SystemInfo sys = new SysControl();
+        Maker hmaker = new HandlersMaker(log, sys);
         Application app = new Application(log, cfg, wserver, hmaker);
 
         app.start();
