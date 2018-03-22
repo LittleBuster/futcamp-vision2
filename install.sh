@@ -1,6 +1,6 @@
 #!/bin/bash
-mkdir /usr/share/fcvision/
-cp -r files /usr/share/fcvision/
-cp -r html /usr/share/fcvision/
-cp -r scripts /usr/share/fcvision/
-cp bin/fcvision.jar /usr/share/fcvision/
+mkdir /root/fcvision/
+cp -r files /root/fcvision/
+cp -r html /root/fcvision/
+cp bin/fcvision.jar /root/fcvision/
+cp fcvision.conf /etc/
