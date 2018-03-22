@@ -13,10 +13,7 @@
 package com.denfnd.sys;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 
 public class SysControl implements SystemInfo {
@@ -29,17 +26,23 @@ public class SysControl implements SystemInfo {
     }
 
     public void switchPwrLed(boolean state) throws IOException {
+        File file = new File("/sys/class/leds/green_led/brightness");
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
         if (state)
-            Runtime.getRuntime().exec("/usr/share/fcvision/scripts/pwr_led_on.sh");
+            bos.write("1".getBytes());
         else
-            Runtime.getRuntime().exec("/usr/share/fcvision/scripts/pwr_led_off.sh");
+            bos.write("0".getBytes());
+        bos.close();
     }
 
     public void switchStatLed(boolean state) throws IOException {
+        File file = new File("/sys/class/leds/red_led/brightness");
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
         if (state)
-            Runtime.getRuntime().exec("/usr/share/fcvision/scripts/stat_led_on.sh");
+            bos.write("1".getBytes());
         else
-            Runtime.getRuntime().exec("/usr/share/fcvision/scripts/stat_led_off.sh");
+            bos.write("0".getBytes());
+        bos.close();
     }
 
     public DiskData getDiskInfo() throws IOException {
