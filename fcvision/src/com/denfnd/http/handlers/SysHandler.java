@@ -27,9 +27,9 @@ public class SysHandler implements HttpHandler {
     private Logger log;
     private SystemInfo sys;
 
-    public SysHandler(Logger logr, SystemInfo syst) {
-        log = logr;
-        sys = syst;
+    public SysHandler(Logger log, SystemInfo sys) {
+        this.log = log;
+        this.sys = sys;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SysHandler implements HttpHandler {
             log.error("Failed to decoding params", "SYS_HANDLER");
             try {
                 page = "<h1>403<br>Forbidden</h1>";
-                exchange.sendResponseHeaders(200, page.length());
+                exchange.sendResponseHeaders(403, page.length());
                 OutputStream os = exchange.getResponseBody();
                 os.write(page.getBytes());
                 os.close();

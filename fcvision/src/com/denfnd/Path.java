@@ -26,6 +26,7 @@ public class Path {
         files.put("cfg", "/etc/fcvision.conf");
         files.put("files", "/root/fcvision/files");
         files.put("html", "/root/fcvision/html");
+        files.put("camera", "/root/fcvision/camera");
     }
 
     public static synchronized Path getInstance() {
@@ -36,5 +37,9 @@ public class Path {
 
     public String get(String name) {
         return files.get(name);
+    }
+
+    public void add(String name, String path) {
+        files.put(name, path);
     }
 }

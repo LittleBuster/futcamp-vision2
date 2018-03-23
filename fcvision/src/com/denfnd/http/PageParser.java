@@ -47,6 +47,11 @@ public class PageParser {
         element.text(value);
     }
 
+    public void setHtml(String id, String value) {
+        Element element = html.body().getElementById(id);
+        element.after(value);
+    }
+
     public String buildPage() {
         return html.outerHtml();
     }
