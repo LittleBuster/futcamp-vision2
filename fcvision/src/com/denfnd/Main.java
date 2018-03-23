@@ -13,9 +13,9 @@
 package com.denfnd;
 
 
+import com.denfnd.hardware.*;
 import com.denfnd.http.*;
-import com.denfnd.sys.SysControl;
-import com.denfnd.sys.SystemInfo;
+import com.denfnd.sys.*;
 import com.denfnd.utils.*;
 
 
@@ -25,7 +25,8 @@ public class Main {
         Configurable cfg = new Configs();
         Server wserver = new WebServer();
         SystemInfo sys = new SysControl();
-        Maker hmaker = new HandlersMaker(log, sys);
+        CamDevice cam = new Camera(log);
+        Maker hmaker = new HandlersMaker(log, sys, cam, cfg);
         Application app = new Application(log, cfg, wserver, hmaker);
 
         app.start();

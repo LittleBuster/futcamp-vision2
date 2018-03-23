@@ -18,6 +18,7 @@ import com.denfnd.http.PageParser;
 import com.denfnd.sys.DiskData;
 import com.denfnd.sys.MemData;
 import com.denfnd.sys.SystemInfo;
+import com.denfnd.utils.Configurable;
 import com.denfnd.utils.Logger;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -29,10 +30,12 @@ import java.io.OutputStream;
 public class IndexHandler implements HttpHandler {
     private Logger log;
     private SystemInfo sys;
+    private Configurable cfg;
 
-    public IndexHandler(Logger logr, SystemInfo syst) {
-        log = logr;
-        sys = syst;
+    public IndexHandler(Logger log, SystemInfo sys, Configurable cfg) {
+        this.log = log;
+        this.sys = sys;
+        this.cfg = cfg;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class IndexHandler implements HttpHandler {
             log.error("Failed to load template: index.html", "INDEX_HANDLER");
             try {
                 page = "<h1>403<br>Forbidden</h1>";
-                exchange.sendResponseHeaders(200, page.length());
+                exchange.sendResponseHeaders(403, page.length());
                 OutputStream os = exchange.getResponseBody();
                 os.write(page.getBytes());
                 os.close();
@@ -92,6 +95,10 @@ public class IndexHandler implements HttpHandler {
         catch (Exception e) {
             parser.setValue("up", "error");
             log.error("Fail to read uptime: " + e.getMessage(), "INDEX_HANDLER");
+        }
+
+        for (int i = 0; i < cfg.getInt("cams_count"); i++) {
+            parser.setHtml("last", "<a href=\"/photo?cam=" + i + "\" class=\"button13\">Камера " + i + "</a> ");
         }
 
         page = parser.buildPage();

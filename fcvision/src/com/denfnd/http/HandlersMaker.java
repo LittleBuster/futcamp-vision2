@@ -13,10 +13,10 @@
 package com.denfnd.http;
 
 
-import com.denfnd.http.handlers.FileHandler;
-import com.denfnd.http.handlers.IndexHandler;
-import com.denfnd.http.handlers.SysHandler;
+import com.denfnd.hardware.CamDevice;
+import com.denfnd.http.handlers.*;
 import com.denfnd.sys.SystemInfo;
+import com.denfnd.utils.Configurable;
 import com.denfnd.utils.Logger;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -24,19 +24,27 @@ import com.sun.net.httpserver.HttpHandler;
 public class HandlersMaker implements Maker {
     private Logger log;
     private SystemInfo sys;
+    private CamDevice cam;
+    private Configurable cfg;
 
-    public HandlersMaker(Logger logr, SystemInfo syst) {
-        log = logr;
-        sys = syst;
+    public HandlersMaker(Logger log, SystemInfo sys, CamDevice cam, Configurable cfg) {
+        this.log = log;
+        this.sys = sys;
+        this.cam = cam;
+        this.cfg = cfg;
     }
 
     public HttpHandler makeHandler(String name) {
         if (name.equals("index"))
-            return new IndexHandler(log, sys);
-        if (name.equals("css") || name.equals("js") || name.equals("img"))
+            return new IndexHandler(log, sys, cfg);
+        if (name.equals("css"))
             return new FileHandler(log);
         if (name.equals("sys"))
             return new SysHandler(log, sys);
+        if (name.equals("camera"))
+            return new CameraHandler(log, cam);
+        if (name.equals("photo"))
+            return new PhotoHandler(log);
         return null;
     }
 }

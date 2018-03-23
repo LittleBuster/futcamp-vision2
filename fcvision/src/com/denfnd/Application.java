@@ -24,13 +24,13 @@ public class Application {
     private Logger log;
     private Configurable cfg;
     private Server websrv;
-    private Maker handmkr;
+    private Maker hmaker;
 
-    public Application(Logger logr, Configurable cfgs, Server server, Maker hmaker) {
-        log = logr;
-        cfg = cfgs;
-        websrv = server;
-        handmkr = hmaker;
+    public Application(Logger log, Configurable cfg, Server websrv, Maker hmaker) {
+        this.log = log;
+        this.cfg = cfg;
+        this.websrv = websrv;
+        this.hmaker = hmaker;
     }
 
     public void start() {
@@ -49,17 +49,17 @@ public class Application {
 
         try {
             websrv.init();
-            websrv.addHandler("/", handmkr.makeHandler("index"));
-            websrv.addHandler("/css", handmkr.makeHandler("css"));
-            websrv.addHandler("/js", handmkr.makeHandler("js"));
-            websrv.addHandler("/img", handmkr.makeHandler("img"));
-            websrv.addHandler("/sys", handmkr.makeHandler("sys"));
+            websrv.addHandler("/", hmaker.makeHandler("index"));
+            websrv.addHandler("/css", hmaker.makeHandler("css"));
+            websrv.addHandler("/photo", hmaker.makeHandler("photo"));
+            websrv.addHandler("/camera", hmaker.makeHandler("camera"));
+            websrv.addHandler("/sys", hmaker.makeHandler("sys"));
             websrv.start(cfg.getInt("server_port"),
                          cfg.getInt("server_queue"),
                          cfg.getInt("server_threads"));
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("Failed to start WebServer: " + e.getMessage(), "APP");
         }
     }
 }
