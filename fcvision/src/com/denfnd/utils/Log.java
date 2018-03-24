@@ -42,7 +42,7 @@ public class Log implements Logger {
     private void makeMessage(String message, String module, LogType type) {
         String out;
         Date date = new Date();
-        SimpleDateFormat dtm = new SimpleDateFormat("[MM.dd][HH:mm]");
+        SimpleDateFormat dtm = new SimpleDateFormat("[dd.MM.YY][HH:mm]");
 
         out = dtm.format(date);
         out += "[" + module + "][";

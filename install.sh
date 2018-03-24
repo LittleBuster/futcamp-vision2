@@ -12,3 +12,5 @@ cp -r html /root/fcvision/
 cp bin/fcvision.jar /root/fcvision/
 cp fcvision.conf /etc/
 cp camera/camera /root/fcvision/camera
+cp fcvision.service /etc/systemd/system/
+cp start.sh /root/fcvision/
