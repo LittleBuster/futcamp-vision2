@@ -26,7 +26,7 @@ public class Application {
     private Server websrv;
     private Maker hmaker;
 
-    public Application(Logger log, Configurable cfg, Server websrv, Maker hmaker) {
+    Application(Logger log, Configurable cfg, Server websrv, Maker hmaker) {
         this.log = log;
         this.cfg = cfg;
         this.websrv = websrv;

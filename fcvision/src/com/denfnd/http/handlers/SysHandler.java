@@ -106,16 +106,18 @@ public class SysHandler implements HttpHandler {
 
         if (ps.getParam("cmd").equals("power_led")) {
             try {
-                if (ps.getParam("status").equals("on")) {
-                    sys.switchPwrLed(true);
-                    page = "{\"result\": true}";
-                }
-                else if (ps.getParam("status").equals("off")) {
-                    sys.switchPwrLed(false);
-                    page = "{\"result\": true}";
-                }
-                else {
-                    page = "{\"result\": false}";
+                switch (ps.getParam("status")) {
+                    case "on":
+                        sys.switchPwrLed(true);
+                        page = "{\"result\": true}";
+                        break;
+                    case "off":
+                        sys.switchPwrLed(false);
+                        page = "{\"result\": true}";
+                        break;
+                    default:
+                        page = "{\"result\": false}";
+                        break;
                 }
             } catch (Exception e) {
                 page = "{\"result\": false}";
@@ -125,16 +127,18 @@ public class SysHandler implements HttpHandler {
 
         if (ps.getParam("cmd").equals("status_led")) {
             try {
-                if (ps.getParam("status").equals("on")) {
-                    sys.switchStatLed(true);
-                    page = "{\"result\": true}";
-                }
-                else if (ps.getParam("status").equals("off")) {
-                    sys.switchStatLed(false);
-                    page = "{\"result\": true}";
-                }
-                else {
-                    page = "{\"result\": false}";
+                switch (ps.getParam("status")) {
+                    case "on":
+                        sys.switchStatLed(true);
+                        page = "{\"result\": true}";
+                        break;
+                    case "off":
+                        sys.switchStatLed(false);
+                        page = "{\"result\": true}";
+                        break;
+                    default:
+                        page = "{\"result\": false}";
+                        break;
                 }
             } catch (Exception e) {
                 page = "{\"result\": false}";
@@ -160,7 +164,6 @@ public class SysHandler implements HttpHandler {
         }
         catch (Exception e) {
             log.error("Failed to send answer: " + e.getMessage(), "SYS_HANDLER");
-            return;
         }
     }
 }
