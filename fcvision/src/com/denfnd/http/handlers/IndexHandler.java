@@ -98,7 +98,7 @@ public class IndexHandler implements HttpHandler {
         }
 
         for (int i = 0; i < cfg.getInt("cams_count"); i++) {
-            parser.setHtml("last", "<a href=\"/photo?cam=" + i + "\" class=\"button13\">Камера " + i + "</a> ");
+            parser.setHtml("last", "<a href=\"/photo?cam=" + i + "\"><img src=\"/camera?dev=" + i + "\" width=\"320\" height=\"240\" /></a> ");
         }
 
         page = parser.buildPage();
@@ -116,7 +116,6 @@ public class IndexHandler implements HttpHandler {
         }
         catch (Exception e) {
             log.error("Failed to send answer: " + e.getMessage(), "INDEX_HANDLER");
-            return;
         }
     }
 }

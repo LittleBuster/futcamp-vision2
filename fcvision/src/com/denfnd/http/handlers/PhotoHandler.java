@@ -75,6 +75,7 @@ public class PhotoHandler implements HttpHandler {
             }
             return;
         }
+        parser.setValue("last", "Фото с камеры " + ps.getParam("cam"));
         parser.setHtml("last", "<img src=\"/camera?dev=" + ps.getParam("cam") + "\" width=\"1024\" height=\"768\" />");
 
         page = parser.buildPage();

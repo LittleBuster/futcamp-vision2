@@ -1,0 +1,17 @@
+[Unit]
+Description=Future Camp Vision
+After=network.target auditd.service
+ConditionPathExists=
+
+[Service]
+EnvironmentFile=-/etc/default/ssh
+ExecStartPre=
+ExecStart=/root/fcvision/start.sh
+ExecReload=/root/fcvision/start.sh
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=fcvision.service
