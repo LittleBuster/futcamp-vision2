@@ -33,8 +33,8 @@ public class ParamsDecoder {
             return true;
         }
 
-        for (int i = 0; i < parts.length; i++) {
-            String[] params = parts[i].split("=");
+        for (String part : parts) {
+            String[] params = part.split("=");
 
             if (params.length < 2)
                 continue;
@@ -45,8 +45,7 @@ public class ParamsDecoder {
 
         if (notExists)
             return false;
-        else
-            return true;
+        return true;
     }
 
     public String getParam(String name) {

@@ -90,10 +90,10 @@ public class SysControl implements SystemInfo {
         reader.readLine();
 
         String[] parts = reader.readLine().split(" ");
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].length() > 0) {
+        for (String part : parts) {
+            if (part.length() > 0) {
                 if (j == 1) {
-                    data.setTotal(Integer.valueOf(parts[i]));
+                    data.setTotal(Integer.valueOf(part));
                     break;
                 }
                 j++;
@@ -101,10 +101,10 @@ public class SysControl implements SystemInfo {
         }
         parts = reader.readLine().split(" ");
         j = 0;
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].length() > 0) {
+        for (String part : parts) {
+            if (part.length() > 0) {
                 if (j == 2) {
-                    data.setUsed(Integer.valueOf(parts[i]));
+                    data.setUsed(Integer.valueOf(part));
                     break;
                 }
                 j++;

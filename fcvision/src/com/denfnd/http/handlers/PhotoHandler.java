@@ -93,7 +93,6 @@ public class PhotoHandler implements HttpHandler {
         }
         catch (Exception e) {
             log.error("Failed to send answer: " + e.getMessage(), "PHOTO_HANDLER");
-            return;
         }
     }
 }
